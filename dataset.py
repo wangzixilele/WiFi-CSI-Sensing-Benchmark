@@ -6,9 +6,38 @@ from torch.utils.data import Dataset, DataLoader
 
 
 def UT_HAR_dataset(root_dir):
+    #the UT_HAR stands for the HAR(Human Activity Recognition, 人体行为识别) for University of Toronto
+    #here defind a method to import the data of the dataset and regular it
+
+    # glob is a moudle that can find the path of the file
+    # the function of glob.glob is to find the path of the file that match the rule
+    # In this case, the rule is root_dir+'/UT_HAR/data/*.csv'
+    # the root_dir is the path of the dataset
+
+    #this root_dir is set at util.py as data = UT_HAR_dataset(root) under the function"load_data_n_model"
+    #and run in the run.py which set the root as './Data/'
+    #so the structure of the file should be:
+    #Benchmark(the running code)
+    # ├── Data
+    #     ├── NTU-Fi_HAR
+    #     │   ├── test_amp
+    #     │   ├── train_amp
+    #     ├── NTU-Fi-HumanID
+    #     │   ├── test_amp
+    #     │   ├── train_amp
+    #     ├── UT_HAR
+    #     │   ├── data
+    #     │   ├── label
+    #     ├── Widardata
+    #     │   ├── test
+    #     │   ├── train
     data_list = glob.glob(root_dir+'/UT_HAR/data/*.csv')
     label_list = glob.glob(root_dir+'/UT_HAR/label/*.csv')
     WiFi_data = {}
+
+    #the WiFi_data is a dictionary that store the data and label
+    #the key is the name of the data and the value is the data be tensor
+
     for data_dir in data_list:
         data_name = data_dir.split('/')[-1].split('.')[0]
         with open(data_dir, 'rb') as f:
